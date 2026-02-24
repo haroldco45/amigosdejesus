@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigos de Jesús - Web App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --azul-diocesis: #0056b3;
+            --amarillo-lectio: #ffcc00;
+            --blanco: #ffffff;
+            --fondo: #f0f4f8;
+            --vibras-color: #e91e63;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--fondo);
+            margin: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: var(--azul-diocesis);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--amarillo-lectio);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .logo-vibras {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--amarillo-lectio);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 8px solid var(--azul-diocesis);
+        }
+
+        .lectio-divina {
+            border-left-color: var(--amarillo-lectio);
+        }
+
+        h2 {
+            color: var(--azul-diocesis);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-interactivo {
+            background-color: var(--azul-diocesis);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-interactivo:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .badge {
+            background: #ffecb3;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-vibras">✨ Vibras Positivas ✨</div>
+    <h1>AMIGOS DE JESÚS</h1>
+    <p>Diócesis de Santa Rosa de Osos</p>
+</header>
+
+<main>
+    <section class="card">
+        <h2><i class="fas fa-dove"></i> El Kerigma</h2>
+        <p><em>"El anuncio de la Buena Noticia de la Salvación"</em></p>
+        <div id="juego-kerigma">
+            <p><strong>Desafío:</strong> Ordena la palabra clave del encuentro:</p>
+            <p style="letter-spacing: 5px; font-weight: bold; color: var(--azul-diocesis);">E U R S M A A C</p>
+            <input type="text" id="input-kerigma" placeholder="¿Qué palabra es?">
+            <button class="btn-interactivo" onclick="checkKerigma()">Validar Palabra</button>
+        </div>
+    </section>
+
+    <section class="card lectio-divina">
+        <h2><i class="fas fa-book-open"></i> Lectio Divina</h2>
+        <span class="badge">Mateo 4, 1-11</span>
+        <p><strong>1. Lectura:</strong> Las tentaciones de Jesús en el desierto.</p>
+        <p><strong>2. Meditación:</strong> ¿Qué te dice Jesús hoy?</p>
+        <textarea id="meditacion" style="width:95%; height:60px; border-radius:8px; border:2px solid var(--amarillo-lectio);" placeholder="Escribe aquí tu reflexión..."></textarea>
+        
+        <p><strong>3. Oración:</strong> "Señor, no nos dejes caer en la tentación..."</p>
+        <button class="btn-interactivo" style="background-color: var(--amarillo-lectio); color: #333;" onclick="alert('¡Gracias por tu oración! Dios te escucha.')">Enviar mi Oración</button>
+    </section>
+
+    <section class="card">
+        <h2><i class="fas fa-puzzle-piece"></i> Sopa de Letras Digital</h2>
+        <p>Busca estas palabras en tu corazón (y en el folleto):</p>
+        <ul>
+            <li>ADORAR</li>
+            <li>DIABLO</li>
+            <li>ÁNGELES</li>
+        </ul>
+        <button class="btn-interactivo" onclick="alert('Próximamente: Juego interactivo completo de la Diócesis')">Jugar Ahora</button>
+    </section>
+</main>
+
+<footer>
+    <p>Inspirado por el Padre Joan Montes</p>
+    <p>Desarrollado con ❤️ para evangelizar</p>
+</footer>
+
+<script>
+    function checkKerigma() {
+        const respuesta = document.getElementById('input-kerigma').value.toUpperCase().trim();
+        if(respuesta === 'EMMAÚS') {
+            alert('¡Correcto! Jesús sale a nuestro encuentro en el camino.');
+        } else {
+            alert('Sigue intentándolo, ¡pista: es un pueblo bíblico!');
+        }
+    }
+</script>
+
+</body>
+</html>
