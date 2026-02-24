@@ -7,160 +7,83 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --azul-diocesis: #0056b3;
-            --amarillo-lectio: #ffcc00;
-            --blanco: #ffffff;
-            --fondo: #f0f4f8;
-            --vibras-color: #e91e63;
+            --azul: #0056b3; --amarillo: #ffcc00; --vibras: #e91e63; --fondo: #f0f4f8;
+            --naranja-biblia: #ff9800;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--fondo);
-            margin: 0;
-            color: #333;
-        }
-
-        header {
-            background-color: var(--azul-diocesis);
+        body { font-family: 'Comic Sans MS', sans-serif; background: var(--fondo); margin: 0; padding-bottom: 50px; }
+        header { background: var(--azul); color: white; text-align: center; padding: 20px; border-bottom: 5px solid var(--amarillo); }
+        .logo-vibras { color: var(--amarillo); font-weight: bold; letter-spacing: 2px; margin-bottom: 5px; }
+        main { max-width: 500px; margin: auto; padding: 15px; }
+        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-left: 10px solid var(--azul); }
+        
+        /* Cajón Naranja Interactivo */
+        .cajon-naranja {
+            background-color: var(--naranja-biblia);
             color: white;
-            padding: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
             text-align: center;
-            border-bottom: 5px solid var(--amarillo-lectio);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .logo-vibras {
-            font-size: 0.8rem;
             font-weight: bold;
-            color: var(--amarillo-lectio);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        main {
-            padding: 20px;
-            max-width: 600px;
-            margin: auto;
-        }
-
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-left: 8px solid var(--azul-diocesis);
-        }
-
-        .lectio-divina {
-            border-left-color: var(--amarillo-lectio);
-        }
-
-        h2 {
-            color: var(--azul-diocesis);
+            margin: 10px 0;
+            transition: 0.3s;
             display: flex;
+            justify-content: center;
             align-items: center;
             gap: 10px;
         }
-
-        .btn-interactivo {
-            background-color: var(--azul-diocesis);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
+        .cajon-naranja:hover { transform: scale(1.02); background-color: #f57c00; }
+        
+        #texto-biblico {
+            display: none;
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
             margin-top: 10px;
-            transition: 0.3s;
-        }
-
-        .btn-interactivo:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
-        }
-
-        input[type="text"] {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
+            border: 1px solid var(--naranja-biblia);
             font-size: 0.9rem;
-            color: #777;
+            line-height: 1.4;
+            color: #333;
         }
 
-        .badge {
-            background: #ffecb3;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
+        .btn { background: var(--azul); color: white; border: none; padding: 12px; border-radius: 25px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        textarea { width: 100%; height: 80px; border-radius: 10px; border: 2px solid #ccc; padding: 10px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-vibras">✨ Vibras Positivas ✨</div>
-    <h1>AMIGOS DE JESÚS</h1>
-    <p>Diócesis de Santa Rosa de Osos</p>
+    <div class="logo-vibras">✨ VIBRAS POSITIVAS ✨</div>
+    <h1 style="margin:0">AMIGOS DE JESÚS</h1>
 </header>
 
 <main>
-    <section class="card">
-        <h2><i class="fas fa-dove"></i> El Kerigma</h2>
-        <p><em>"El anuncio de la Buena Noticia de la Salvación"</em></p>
-        <div id="juego-kerigma">
-            <p><strong>Desafío:</strong> Ordena la palabra clave del encuentro:</p>
-            <p style="letter-spacing: 5px; font-weight: bold; color: var(--azul-diocesis);">E U R S M A A C</p>
-            <input type="text" id="input-kerigma" placeholder="¿Qué palabra es?">
-            <button class="btn-interactivo" onclick="checkKerigma()">Validar Palabra</button>
+    <section class="card" style="border-left-color: var(--amarillo);">
+        <h2><i class="fas fa-bible"></i> Lectio Divina</h2>
+        <p>Toca el cajón naranja para leer la Palabra:</p>
+
+        <div class="cajon-naranja" onclick="toggleBiblia()">
+            <i class="fas fa-book-open"></i> MATEO 4, 1-11
         </div>
-    </section>
 
-    <section class="card lectio-divina">
-        <h2><i class="fas fa-book-open"></i> Lectio Divina</h2>
-        <span class="badge">Mateo 4, 1-11</span>
-        <p><strong>1. Lectura:</strong> Las tentaciones de Jesús en el desierto.</p>
-        <p><strong>2. Meditación:</strong> ¿Qué te dice Jesús hoy?</p>
-        <textarea id="meditacion" style="width:95%; height:60px; border-radius:8px; border:2px solid var(--amarillo-lectio);" placeholder="Escribe aquí tu reflexión..."></textarea>
-        
-        <p><strong>3. Oración:</strong> "Señor, no nos dejes caer en la tentación..."</p>
-        <button class="btn-interactivo" style="background-color: var(--amarillo-lectio); color: #333;" onclick="alert('¡Gracias por tu oración! Dios te escucha.')">Enviar mi Oración</button>
-    </section>
+        <div id="texto-biblico">
+            <strong>Las tentaciones de Jesús:</strong><br><br>
+            "Entonces Jesús fue llevado por el Espíritu al desierto, para ser tentado por el diablo. Y después de haber ayunado cuarenta días y cuarenta noches, tuvo hambre. Y vino a él el tentador, y le dijo: Si eres Hijo de Dios, di que estas piedras se conviertan en pan. Él respondió y dijo: Escrito está: No solo de pan vivirá el hombre, sino de toda palabra que sale de la boca de Dios..."
+        </div>
 
-    <section class="card">
-        <h2><i class="fas fa-puzzle-piece"></i> Sopa de Letras Digital</h2>
-        <p>Busca estas palabras en tu corazón (y en el folleto):</p>
-        <ul>
-            <li>ADORAR</li>
-            <li>DIABLO</li>
-            <li>ÁNGELES</li>
-        </ul>
-        <button class="btn-interactivo" onclick="alert('Próximamente: Juego interactivo completo de la Diócesis')">Jugar Ahora</button>
+        <p style="margin-top:20px;"><strong>Meditación:</strong> ¿Qué te dice Jesús hoy?</p>
+        <textarea id="medit" placeholder="Escribe aquí tu reflexión..."></textarea>
+        <button class="btn" style="background: var(--amarillo); color: black;" onclick="alert('¡Guardado en tu corazón!')">Guardar</button>
     </section>
 </main>
 
-<footer>
-    <p>Inspirado por el Padre Joan Montes</p>
-    <p>Desarrollado con ❤️ para evangelizar</p>
-</footer>
-
 <script>
-    function checkKerigma() {
-        const respuesta = document.getElementById('input-kerigma').value.toUpperCase().trim();
-        if(respuesta === 'EMMAÚS') {
-            alert('¡Correcto! Jesús sale a nuestro encuentro en el camino.');
+    function toggleBiblia() {
+        const texto = document.getElementById('texto-biblico');
+        if (texto.style.display === "block") {
+            texto.style.display = "none";
         } else {
-            alert('Sigue intentándolo, ¡pista: es un pueblo bíblico!');
+            texto.style.display = "block";
         }
     }
 </script>
