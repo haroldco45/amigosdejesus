@@ -8,37 +8,32 @@
     <style>
         :root {
             --azul: #0056b3; --amarillo: #ffcc00; --vibras: #e91e63; 
-            --fondo: #f0f4f8; --naranja: #ff9800;
+            --fondo: #f0f4f8; --naranja: #ff9800; --verde: #4caf50;
         }
-        body { font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; background: var(--fondo); margin: 0; padding-bottom: 50px; }
+        body { font-family: 'Comic Sans MS', sans-serif; background: var(--fondo); margin: 0; padding-bottom: 50px; }
         
-        /* Header con Marca */
         header { background: var(--azul); color: white; text-align: center; padding: 25px; border-bottom: 5px solid var(--amarillo); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .logo-vibras { color: var(--amarillo); font-weight: bold; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; }
         
         main { max-width: 600px; margin: auto; padding: 15px; }
+        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 25px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); border-top: 8px solid var(--azul); }
         
-        /* Tarjetas */
-        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 25px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); border-top: 8px solid var(--azul); transition: 0.3s; }
-        h2 { color: var(--azul); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        /* Adivinanzas Estilo Card */
+        .adivinanza-box { background: #f9f9f9; border: 2px dashed var(--azul); padding: 15px; border-radius: 15px; margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
+        .adivinanza-box:hover { background: #edf7ff; }
+        .respuesta { display: none; color: var(--verde); font-weight: bold; margin-top: 10px; border-top: 1px solid #ddd; padding-top: 5px; }
 
-        /* Juego Kerigma */
-        .letras-desordenadas { font-size: 1.4rem; letter-spacing: 6px; color: var(--vibras); text-align: center; background: #fff0f5; padding: 10px; border-radius: 10px; margin: 15px 0; font-weight: bold; }
-        
         /* Sopa de Letras */
         .sopa-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; margin: 15px 0; background: #eee; padding: 10px; border-radius: 10px; }
-        .letra { background: white; text-align: center; padding: 8px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1rem; user-select: none; }
+        .letra { background: white; text-align: center; padding: 8px; border-radius: 5px; cursor: pointer; font-weight: bold; user-select: none; }
         .letra.active { background: var(--vibras); color: white; }
 
-        /* Lectio Divina Interactiva */
-        .cajon-biblia { background: var(--naranja); color: white; padding: 15px; border-radius: 15px; cursor: pointer; text-align: center; font-weight: bold; margin: 15px 0; transition: 0.3s; }
-        .cajon-biblia:hover { filter: brightness(1.1); }
-        #texto-mateo { display: none; background: #fffcf0; padding: 20px; border-radius: 10px; border: 2px dashed var(--naranja); margin-top: 10px; line-height: 1.6; font-family: 'Verdana', sans-serif; }
+        /* Lectio Divina */
+        .cajon-biblia { background: var(--naranja); color: white; padding: 15px; border-radius: 15px; cursor: pointer; text-align: center; font-weight: bold; margin: 15px 0; }
+        #texto-mateo { display: none; background: #fffcf0; padding: 20px; border-radius: 10px; border: 2px dashed var(--naranja); margin-top: 10px; line-height: 1.6; }
 
-        /* Utilidades */
-        .btn { background: var(--azul); color: white; border: none; padding: 15px; border-radius: 30px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; box-sizing: border-box; text-align: center; font-size: 1.2rem; }
-        textarea { width: 100%; height: 100px; border-radius: 10px; border: 2px solid #ccc; padding: 10px; box-sizing: border-box; margin-top: 10px; }
+        .btn { background: var(--azul); color: white; border: none; padding: 15px; border-radius: 30px; width: 100%; font-weight: bold; cursor: pointer; }
+        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; box-sizing: border-box; text-align: center; }
         .explicacion { background: #e3f2fd; padding: 15px; border-radius: 10px; font-size: 0.9rem; border-left: 4px solid var(--azul); margin-top: 15px; }
     </style>
 </head>
@@ -53,50 +48,63 @@
 <main>
     <section class="card">
         <h2><i class="fas fa-heart"></i> 1. El Kerigma</h2>
-        <p>Descubre el gran Sacramento ordenando las letras:</p>
-        <div class="letras-desordenadas">E U R S A A C Í T I</div>
-        <input type="text" id="input-k" placeholder="Escribe la palabra aquí...">
-        <button class="btn" onclick="validarK()" style="margin-top:10px">¡Lo tengo!</button>
-        <p id="win-k" style="display:none; color: green; font-weight: bold; text-align: center;">¡Correcto! Es la EUCARISTÍA 🍞🍷</p>
+        <p>Ordena las letras para descubrir el secreto:</p>
+        <div style="font-size: 1.4rem; letter-spacing: 6px; color: var(--vibras); text-align: center; font-weight: bold;">E U R S A A C Í T I</div>
+        <input type="text" id="input-k" placeholder="Escribe la palabra...">
+        <button class="btn" onclick="validarK()" style="margin-top:10px">Verificar</button>
+        <p id="win-k" style="display:none; color: green; font-weight: bold; text-align: center;">¡EUCARISTÍA! 🍞🍷</p>
+    </section>
+
+    <section class="card" style="border-top-color: var(--verde);">
+        <h2><i class="fas fa-question-circle"></i> 2. Adivinanzas Bíblicas</h2>
+        <p>Toca el cuadro para ver la respuesta:</p>
+
+        <div class="adivinanza-box" onclick="toggleRespuesta('r1')">
+            <p>"Blanco es, lo tomamos en la Misa y es el Cuerpo de Cristo."</p>
+            <div id="r1" class="respuesta">Respuesta: El Pan / La Hostia</div>
+        </div>
+
+        <div class="adivinanza-box" onclick="toggleRespuesta('r2')">
+            <p>"No soy luz, pero ilumino; no soy agua, pero doy vida. Soy la Palabra de Dios."</p>
+            <div id="r2" class="respuesta">Respuesta: La Biblia</div>
+        </div>
+
+        <div class="adivinanza-box" onclick="toggleRespuesta('r3')">
+            <p>"Lugar de silencio, arena y calor, donde Jesús venció al tentador."</p>
+            <div id="r3" class="respuesta">Respuesta: El Desierto</div>
+        </div>
     </section>
 
     <section class="card" style="border-top-color: var(--vibras);">
-        <h2><i class="fas fa-search"></i> 2. Sopa de Letras</h2>
-        <p>Busca en el folleto: <strong>DIABLO, ADORAR, ÁNGELES</strong></p>
+        <h2><i class="fas fa-search"></i> 3. Sopa de Letras</h2>
+        <p>Busca: <strong>DIABLO, ADORAR, ÁNGELES</strong></p>
         <div class="sopa-grid" id="grid"></div>
-        <p style="font-size: 0.8rem; text-align: center;">(Toca las letras para marcarlas en rojo)</p>
     </section>
 
     <section class="card" style="border-top-color: var(--amarillo);">
-        <h2><i class="fas fa-bible"></i> 3. Lectio Divina</h2>
-        <p>Haz clic abajo para leer el Evangelio de hoy:</p>
-        
+        <h2><i class="fas fa-bible"></i> 4. Lectio Divina</h2>
         <div class="cajon-biblia" onclick="toggleBiblia()">
-            <i class="fas fa-book-open"></i> MATEO 4, 1-11 (VER TEXTO)
+            <i class="fas fa-book-open"></i> MATEO 4, 1-11 (TEXTO COMPLETO)
         </div>
-
         <div id="texto-mateo">
-            <strong>Las Tentaciones de Jesús</strong><br><br>
-            "Jesús fue llevado por el Espíritu al desierto... Después de ayunar 40 días, tuvo hambre. El tentador le dijo: 'Si eres Hijo de Dios, di que estas piedras se conviertan en pan'. Él respondió: 'Escrito está: No sólo de pan vive el hombre...'. Luego el diablo lo llevó a la ciudad santa... y finalmente a un monte muy alto..."
-            <hr>
+            <p><em>"Jesús fue llevado al desierto... el tentador le dijo: Si eres Hijo de Dios, di que estas piedras se conviertan en pan..."</em></p>
             <div class="explicacion">
-                <strong>💡 Contexto Histórico:</strong> El desierto representa el lugar de la prueba donde Israel falló, pero Jesús vence como el nuevo guía fiel.<br><br>
-                <strong>🌍 Aplicación Real:</strong> Las tentaciones de hoy son el orgullo y el materialismo. La app nos recuerda que la Palabra es nuestra arma.
+                <strong>🏛️ Contexto:</strong> El desierto es el lugar de purificación. Jesús responde con la ley de Dios para enseñarnos a ser fuertes.<br><br>
+                <strong>🌟 Realidad:</strong> Hoy, nuestras "piedras" son los lujos o el egoísmo. ¡Debemos elegir siempre el amor!
             </div>
         </div>
-
-        <p style="margin-top:20px;"><strong>Mi Meditación:</strong></p>
-        <textarea placeholder="¿Qué aprendiste hoy del Padre Joan y de Jesús?"></textarea>
-        <button class="btn" style="background: var(--amarillo); color: #333; margin-top: 10px;" onclick="alert('¡Guardado con éxito!')">Guardar en mi bitácora</button>
     </section>
 </main>
 
 <script>
     function validarK() {
         const val = document.getElementById('input-k').value.toUpperCase().trim();
-        if(val === 'EUCARISTÍA' || val === 'EUCARISTIA') {
-            document.getElementById('win-k').style.display = 'block';
-        } else { alert('¡Sigue intentando!'); }
+        if(val.includes('EUCARISTIA')) document.getElementById('win-k').style.display = 'block';
+    }
+
+    function toggleRespuesta(id) {
+        const r = document.getElementById(id);
+        r.style.display = (r.style.display === 'block') ? 'none' : 'block';
     }
 
     function toggleBiblia() {
@@ -104,7 +112,7 @@
         t.style.display = (t.style.display === 'block') ? 'none' : 'block';
     }
 
-    // Generar Sopa
+    // Sopa
     const letras = "DIABLOXXADORARXXANGELESXXXXTENTARXXXXXXPIEDRAXX";
     const grid = document.getElementById('grid');
     letras.split('').forEach(l => {
